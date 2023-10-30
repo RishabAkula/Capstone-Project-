@@ -1,0 +1,31 @@
+hi this is rishab kumar akula 
+this is a project give to me by letsupgrade
+
+the project's name is 
+         :::::: CT SCAN IMAGE CLASSIFICATION ::::::
+
+This dataset contains 1252 CT scans that are positive for SARS-CoV-2 infection (COVID-19) and 1230 CT scans for patients non-infected by SARS-CoV-2, 2482 CT scans in total. These
+data have been collected from real patients in hospitals from Sao Paulo, Brazil. The aim of this dataset is to encourage the research and development of artificial intelligent methods which are
+able to identify if a person is infected by SARS-CoV-2 through the analysis of his/her CT scans.
+
+To work with the provided data sets for detection of covid 19 using CT scans i have follwed these steps : 
+
+1. Data Preparation:
+
+   - Load the dataset, which contains 1252 CT scans of COVID-19-positive patients and 1230 CT scans of non-infected patients.
+   - Resize all the images to a fixed size for model training (e.g., 224x224 pixels).
+
+2. Data Augmentation:
+
+   Apply data augmentation to improve the model's generalization. You can use the `ImageDataGenerator` from Keras with various augmentation parameters, such as:
+  
+    - `width_shift_range`
+   - `height_shift_range`
+   - `rotation_range`
+   - `shear_range`
+   - `zoom_range`
+
+3. Split the Data:
+
+   Split the dataset into training, validation, and test sets.  ( i.e. 70-30-10 )
+    
