@@ -27,7 +27,7 @@ To work with the provided data sets for detection of covid 19 using CT scans i h
 
 3. Split the Data:
 
-   Split the dataset into training, validation, and test sets.  ( i.e. 70-30-10 )
+   Split the dataset into training, validation, and test sets.  ( i.e. 70-20-10 )
 
 4. Load Pretrained ResNet Model:
 
