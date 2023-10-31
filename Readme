@@ -28,4 +28,36 @@ To work with the provided data sets for detection of covid 19 using CT scans i h
 3. Split the Data:
 
    Split the dataset into training, validation, and test sets.  ( i.e. 70-30-10 )
-    
+
+4. Load Pretrained ResNet Model:
+
+   Choose a ResNet architecture from the options provided (e.g., ResNet-50) and load its pretrained weights. You can use Keras' built-in models.
+
+5. Model Building:
+
+   Modify the ResNet model to suit your binary classification task (COVID-19 detection). You may want to add additional fully connected layers on top of the ResNet model for fine-tuning.
+
+6. Early Stopping and ModelCheckpoint:
+
+   Implement early stopping and model checkpoint callbacks during training. Early stopping helps prevent overfitting, and ModelCheckpoint saves the best model during training.
+
+7. Training:
+
+   Train the model using the augmented training dataset. Compile the model with appropriate loss function and optimizer for binary classification. Monitor the validation performance and apply early stopping when necessary.
+
+8. Model Evaluation:
+
+   After training, evaluate the model's performance using the test dataset.
+
+9. Performance Metrics:
+
+   Calculate various performance metrics to assess the model's performance, such as:
+   - Accuracy
+   - Precision
+   - Recall
+   - F1-score
+   - ROC curve and AUC (Area Under the Curve)
+   - Confusion matrix
+   - You can use libraries like scikit-learn to compute these metrics
+
+
