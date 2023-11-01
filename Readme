@@ -1,63 +1,78 @@
-hi this is rishab kumar akula 
-this is a project give to me by letsupgrade
+Hi this is Rishab Kumar Akula 
+this is a project given to me by letsupgrade
 
-the project's name is 
-         :::::: CT SCAN IMAGE CLASSIFICATION ::::::
+the project's name is :
 
-This dataset contains 1252 CT scans that are positive for SARS-CoV-2 infection (COVID-19) and 1230 CT scans for patients non-infected by SARS-CoV-2, 2482 CT scans in total. These
-data have been collected from real patients in hospitals from Sao Paulo, Brazil. The aim of this dataset is to encourage the research and development of artificial intelligent methods which are
-able to identify if a person is infected by SARS-CoV-2 through the analysis of his/her CT scans.
+                                      :::::: CT SCAN IMAGE CLASSIFICATION ::::::
+
+Problem statement :
+
+The dataset contains 1252 CT scans that are positive for SARS-CoV-2 infection (COVID-19) and 1230 CT scans for patients non-infected by SARS-CoV-2, 2482 CT scans in total. The
+data have been collected from real patients in hospitals from Sao Paulo, Brazil. The aim of this dataset is to encourage the research and development of artificial intelligent 
+methods which are able to identify if a person is infected by SARS-CoV-2 through the analysis of his/her CT scans.
 
 To work with the provided data sets for detection of covid 19 using CT scans i have follwed these steps : 
 
-1. Data Preparation:
+1. Imports: 
 
-   - Load the dataset, which contains 1252 CT scans of COVID-19-positive patients and 1230 CT scans of non-infected patients.
-   - Resize all the images to a fixed size for model training (e.g., 224x224 pixels).
+   - Import the necessary Python modules and ResNet models for training and prediction.
+   - Also importing necessary metrics for Accuracy,Precision,Confusion matrix and so on.
 
-2. Data Augmentation:
+2. Data Preparation:
 
-   Apply data augmentation to improve the model's generalization. You can use the `ImageDataGenerator` from Keras with various augmentation parameters, such as:
+   - Load the data images folder, which contains 1252 CT scans of COVID-19-positive patients and 1230 CT scans of non-infected patients.
+
+3. Load the data sets :
+
+   - Store data of both the data sets in the form of a data list and add label for each Covid-19 Positive image as 1 and non Covid 19 images as 0,and add into label list. 
+   - Convert the data and labels list into NumPy Arrays 
+
+4. Split the Data:
+
+   - Split the dataset into training, validation, and test sets. ( i.e. 70-20-10 ).
+
+5. Load the pre-trained ResNet model :
+
+   - Load the pretrained ResNet model using each of the ResNet architectures (ResNet18, ResNet34, ResNet50, ResNet101, ResNet152)
+
+6. Model Building :
+
+  - Modify the ResNet model to suit your binary classification task ( i.e. COVID-19 detection). You may want to add additional fully connected layers on top of the ResNet model for fine-tuning.
+  - Compile the model using any Deep Learing model such as Adam optimisation algorithm.
+
+7. Data Augmentation:
+
+   - Apply data augmentation to improve the model's generalization. 
+   - You can use the `ImageDataGenerator` from Keras with various augmentation parameters, such as :
   
-    - `width_shift_range`
+   - `width_shift_range`
    - `height_shift_range`
    - `rotation_range`
    - `shear_range`
-   - `zoom_range`
+   - `zoom_range`,Etc.
 
-3. Split the Data:
+8. Early Stopping and ModelCheckpoint :
 
-   Split the dataset into training, validation, and test sets.  ( i.e. 70-20-10 )
+   - Implement early stopping and model checkpoint callbacks during training. 
+   - Early stopping helps prevent overfitting, and ModelCheckpoint saves the best model during training.
+  
+9. Training the model :
 
-4. Load Pretrained ResNet Model:
+   - Train the model using the augmented training dataset. 
+   - Compile the model with appropriate loss function and optimizer for binary classification. 
 
-   Choose a ResNet architecture from the options provided (e.g., ResNet-50) and load its pretrained weights. You can use Keras' built-in models.
+10. Model Evaluation :
 
-5. Model Building:
+   - Load the best ResNet model.
+   - Using the best ResNet model predict weather the test image is Covid-19 positive or non-Covid-19.
 
-   Modify the ResNet model to suit your binary classification task (COVID-19 detection). You may want to add additional fully connected layers on top of the ResNet model for fine-tuning.
+11. Performance Metrics :
 
-6. Early Stopping and ModelCheckpoint:
-
-   Implement early stopping and model checkpoint callbacks during training. Early stopping helps prevent overfitting, and ModelCheckpoint saves the best model during training.
-
-7. Training:
-
-   Train the model using the augmented training dataset. Compile the model with appropriate loss function and optimizer for binary classification. Monitor the validation performance and apply early stopping when necessary.
-
-8. Model Evaluation:
-
-   After training, evaluate the model's performance using the test dataset.
-
-9. Performance Metrics:
-
-   Calculate various performance metrics to assess the model's performance, such as:
-   - Accuracy
-   - Precision
-   - Recall
-   - F1-score
-   - ROC curve and AUC (Area Under the Curve)
-   - Confusion matrix
-   - You can use libraries like scikit-learn to compute these metrics
-
+   Calculate various performance metrics to assess the model's performance from scikit-learn library , such as:
+   - Accuracy.
+   - Precision.
+   - Recall.
+   - F1-score.
+   - ROC curve and AUC (Area Under the Curve).
+   - Confusion matrix.
 
