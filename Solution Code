@@ -1,0 +1,37 @@
+import os
+import cv2
+import numpy as np
+
+# Define the paths to your data folders
+covid19_folder = '/content/drive/MyDrive/COVID'
+non_infected_folder = '/content/drive/MyDrive/non-COVID'
+
+# Create lists to store the data and labels
+data = []
+labels = []
+
+# Load COVID-19 positive images
+for filename in os.listdir(covid19_folder):
+    if filename.endswith('.jpg') or filename.endswith('.png'):
+        img = cv2.imread(os.path.join(covid19_folder, filename))
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # Ensure images are in RGB format
+        img = cv2.resize(img, (224, 224))  # Resize images to a fixed size
+        data.append(img)
+        labels.append(1)  # Label 1 for COVID-19 positive cases
+
+# Load non-infected images
+for filename in os.listdir(non_infected_folder):
+    if filename.endswith('.jpg') or filename.endswith('.png'):
+        img = cv2.imread(os.path.join(non_infected_folder, filename))
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        img = cv2.resize(img, (224, 224))
+        data.append(img)
+        labels.append(0)  # Label 0 for non-infected cases
+
+# Convert data and labels to NumPy arrays
+data = np.array(data)
+labels = np.array(labels)
+
+#size of the data array and labels array
+print(data.size)
+print(labels.size)
