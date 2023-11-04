@@ -1,0 +1,20 @@
+
+                         :::::: INSTALLATION DETAILS :::::::
+
+I have used google collab 
+
+i have installed the following :
+       1. Scikit learn (pip install Sklearn )   
+       2. opencv (pip install opencv )
+       3. NumPy (pip install NumPy)  
+       4. tensorflow (pip install tensorflow )
+       5. Keras (pip install Keras )
+
+2) The datasets (Covid-19, Non-Covid CT scans ) are already on the Google Drive, i have used google links to import the data directly  
+
+the links that i have used to import the data from the given google link are
+                                       covid19_folder =  '/content/drive/MyDrive/COVID' 
+                                       non_infected_folder = '/content/drive/MyDrive/non-COVID' 
+
+
+
