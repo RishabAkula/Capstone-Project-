@@ -1,6 +1,15 @@
 import os
+import random
 import cv2
 import numpy as np
+from sklearn.model_selection import train_test_split
+
+from tensorflow.keras.applications import ResNet101
+from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
+from tensorflow.keras.models import Model
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 
 # Define the paths to your data folders
 covid19_folder = '/content/drive/MyDrive/COVID'
@@ -33,5 +42,60 @@ data = np.array(data)
 labels = np.array(labels)
 
 #size of the data array and labels array
-print(data.size)
-print(labels.size)
+#print(data.size)
+#print(labels.size)
+
+# Split the data into training, validation, and test sets
+X_train, X_temp, y_train, y_temp = train_test_split(data, labels, test_size=0.3, random_state=42)
+X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)
+
+# Define a list of ResNet architectures
+#resnet_architectures = [ResNet18, ResNet34, ResNet50, ResNet101, ResNet152]
+resnet_architectures = [ResNet101]
+
+for resnet_model in resnet_architectures:
+    # Load pre-trained ResNet model
+    base_model = resnet_model(weights='imagenet', include_top=False)
+
+    # Add custom top layers for binary classification
+    x = base_model.output
+    x = GlobalAveragePooling2D()(x)
+    x = Dense(1024, activation='relu')(x)
+    predictions = Dense(1, activation='sigmoid')(x)
+
+    model = Model(inputs=base_model.input, outputs=predictions)
+
+    # Compile the model
+    model.compile(optimizer=Adam(learning_rate=0.0001), loss='binary_crossentropy', metrics=['accuracy'])
+
+    # Create data generators with data augmentation
+    train_datagen = ImageDataGenerator(
+        rescale=1./255,
+        rotation_range=20,
+        width_shift_range=0.2,
+        height_shift_range=0.2,
+        shear_range=0.2,
+        horizontal_flip=True
+    )
+
+    # Set up Early Stopping and Model Checkpoint callbacks
+    early_stopping = EarlyStopping(monitor='val_loss', patience=10, verbose=1)
+    model_checkpoint = ModelCheckpoint(f'best_model_{resnet_model.__name__}.h5', save_best_only=True, verbose=1)
+
+    # Train the model
+    history = model.fit_generator(
+        train_datagen.flow(X_train, y_train, batch_size=32),
+        validation_data=(X_val, y_val),
+        epochs=100,
+        callbacks=[early_stopping, model_checkpoint]
+    )
+
+    # Load the best model
+    model.load_weights(f'best_model_{resnet_model.__name__}.h5')
+
+    # Evaluate the model on the test set
+    test_predictions = model.predict(X_test)
+    test_predictions = (test_predictions > 0.5).astype(int)
+
+    # Selected Model Name
+    print(f"Model: {resnet_model.__name__}")
